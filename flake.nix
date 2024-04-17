@@ -10,7 +10,7 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ kubectl kubernetes-helm kind helmfile sops fluxcd ];
+          packages = with pkgs; [ kubectl kubernetes-helm kind sops age fluxcd ];
         };
       });
     };
