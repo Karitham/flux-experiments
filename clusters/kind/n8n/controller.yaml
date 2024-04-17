@@ -1,0 +1,69 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: n8n
+  namespace: n8n
+spec:
+  interval: 10m
+  timeout: 5m
+  chart:
+    spec:
+      chart: n8n
+      version: 0.*
+      sourceRef:
+        kind: HelmRepository
+        name: n8n
+      interval: 5m
+  releaseName: podinfo
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  test:
+    enable: true
+  values:
+    persistence:
+      enabled: true
+      type: dynamic
+      size: 5Gi
+    config:
+      database:
+        type: postgresdb
+        postgresdb:
+          database: postgres
+          host: postgres-postgresql
+          password: ENC[AES256_GCM,data:FbY8DPqXbJQ7J7B1nzn5huj3n1lZdMHer1QZcf1UIUlAWoNPKH9uSYlcIVFfUHy05Q1CSwOOGUOWsB0d4O18hQ==,iv:VPrWdjs32fztbFJbNZiBZ7gKx8LhjuwKCYqOI1xPtZM=,tag:rrBZyymdVJPhlhGecadJHA==,type:str]
+          user: postgres
+      generic:
+        timezone: Europe/Paris
+sops:
+  kms: []
+  gcp_kms: []
+  azure_kv: []
+  hc_vault: []
+  age:
+    - recipient: age1lcfsam5fdsnr0l3ff0kvnqfx450hcjr2qg6cyx8qskjt4um78d2slw2cmg
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBoK3JLN1lBcjRJWmozL3F2
+        S29HZjZod2h0d2w3b0RDWitrNVVLQVljYlVrCmhjUWRHeTVPRVBnZlNLdThnOEVO
+        SkNOQzZaY3NsSEh6amEwTzhqVUFmalUKLS0tIGtGeGVBR0tiK2xBL3Rwdmd4S3li
+        Z05LRGdRbzRxeVR6OUgyTXVEVGEzVm8Kq8TOaIW8hWUeMVU+U+VoUhE4VkXwGVCd
+        k6V1qrAzfrtPW2aTxcMLpyPYIKckgAqFNM0tH8JFcoopt2w1ergSdw==
+        -----END AGE ENCRYPTED FILE-----
+    - recipient: age1cp860z6krdvf57wkarh82ggg00l4ucuh83hg4n64fnfwcj5qmu5sqfxw88
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYK0VPRFR5a0xWSTBiTlVM
+        dEx4Q0RDOExiMHNEK3RFa3V0SjBqSUJmaXo4CkgvOUJQQThHTmVNNjNRMDZVaTFT
+        ZWVmMUNNSHVad0JFc2V5WHAwWnhsc1UKLS0tIGhuYXpFeTF6OFZHVXBhcU03VFlk
+        Y1RXQ3dWQ05GWU0wUHNqWU9RMTl5ZkkKIoT7jFRWnfNTDrRdGfSmvFR+a4JdiJFp
+        QSYTfUi+DHHvwxbS7Ggp/LgD1bZbuTjSEYVlmaOtq9s3tgMg26RByw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2024-04-17T10:51:41Z"
+  mac: ENC[AES256_GCM,data:NHRMx5J4he/ak2u0hVHaumf9FY9G9mS00o33U2bb9nmGY4TRCfMbOYXNTcuDZdrRnOA0SlzW3Ebqp5BDvpt7yHKAaeIlvYsACFeUDt7+FIDMUt26qhHahnETyDS3LunLIgKiGVbTc4an8ZyY5uEHXRxqNNbWFMFZ+fd5xg2Rd1E=,iv:YD7f8Q+hDEVykFhrLd9lV/cAPklcA1iKgh3uAhgV3YI=,tag:KZqhgML8hF18pHslU5ULFQ==,type:str]
+  pgp: []
+  encrypted_regex: ^(data|stringData|password)$
+  version: 3.8.1
